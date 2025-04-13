@@ -1,13 +1,11 @@
 public class Main {
     public static void main(String[] args) {
 
-        Account myAccount = new Account(1000);
+        Account myAccount = new Account(1000, "Savings");
 
-        System.out.println(myAccount.getInterest());
-
+        myAccount.savingsEarnings();
+        myAccount.deposit(578);
         myAccount.getBalance();
-        myAccount.withdraw(1001);
-        myAccount.setBalance(5000);
-        myAccount.deposit(21);
+        myAccount.savingsEarnings();
     }
 }
