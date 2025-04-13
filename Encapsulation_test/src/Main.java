@@ -1,11 +1,12 @@
 public class Main {
     public static void main(String[] args) {
 
-        Account myAccount = new Account(1000, "Savings");
+        Account myAccount = new Account(1000, "Savings", "Medo");
+        Account myAccount2 = new Account(2500, "Checkings", "Sara");
 
-        myAccount.savingsEarnings();
-        myAccount.deposit(578);
         myAccount.getBalance();
-        myAccount.savingsEarnings();
+        myAccount.getHistory();
+        myAccount.withdraw(1200);
+        myAccount.getHistory();
     }
 }
