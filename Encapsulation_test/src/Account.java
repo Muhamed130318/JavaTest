@@ -46,6 +46,7 @@ public class Account {
         if (this.balance - amount < -1000){
             remaining = -1000 + this.balance;
             System.out.printf("Account balance is %s.%n Maximum overdraft amount is %s.", this.balance, remaining);
+            //dodat ovdje jos jedan if else
             transactionHistory.add("Overdraft withdrawal failed, not enough funds");
         }else {
             overAmount = amount - this.balance;
@@ -88,6 +89,7 @@ public class Account {
         if (this.balance - amount < 0){
             System.out.printf("You cannot withdraw that amount. Your current account balance is %.2f./nMinimum account balance is $0.%n", this.balance);
             System.out.printf("Would you like to overdraft? Yes/No");
+            //dodat provjeru jel vec na max overdraft
             String overdraftAnsw = input.nextLine();
             if (overdraftAnsw.equals("No")) {
                 System.out.println("Thank you for using our services.");
