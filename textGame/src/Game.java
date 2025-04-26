@@ -6,15 +6,19 @@ public class Game {
     private World world;
     private Scanner scanner;
     private String currentLocation;
-    NPC bear = new Enemy(5, 20, "Bear");
+    Enemy bear = new Enemy(5, 20, "Bear");
     private Battle battle;
+    Character mainCharacter;
+
 
     public Game(){
         world = new World();
         scanner = new Scanner(System.in);
         currentLocation = "Village";
         battle = new Battle(this);
+        mainCharacter = new Character();
     }
+
 
     private String input;
 
@@ -33,7 +37,6 @@ public class Game {
                 newLocation = input.substring(3);
                 if (world.hasLocation(newLocation)){
                     if (newLocation.equalsIgnoreCase("Cave")){
-                        Enemy bear = new Enemy(5, 20, "Bear");
                         battle.Cave(bear);
                         if (battle.isEnteredArea()){
                             currentLocation = newLocation;
