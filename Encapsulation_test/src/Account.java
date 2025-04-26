@@ -20,8 +20,8 @@ public class Account {
         }
         this.accountType = accountType;
         this.accName = accName;
-        this.accNumber = loadAccNumber();//generateAccNumber();
-        if (loadAccNumber() == null){
+        this.accNumber = loadAccNumber();
+        if (this.accNumber == null){
             this.accNumber = generateAccNumber();
             saveAccNumber(this.accNumber);
         }
