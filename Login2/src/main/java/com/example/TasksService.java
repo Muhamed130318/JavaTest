@@ -9,22 +9,27 @@ public class TasksService {
 
     private final ClientsService clientsService;
     public TasksRepo tasksRepo;
-   // public TaskUpdateDTO taskUpdateDTO;
-    //public Tasks tasks;
+    private LogRepo logRepo;
 
-    public TasksService(TasksRepo tasksRepo, ClientsService clientsService){
+    public TasksService(TasksRepo tasksRepo, ClientsService clientsService, LogRepo logRepo){
         this.tasksRepo = tasksRepo;
         this.clientsService = clientsService;
+        this.logRepo = logRepo;
     }
 
     public void addTask(TaskRequest taskRequest){
         Optional<Clients> client = clientsService.getUserById(taskRequest.getId());
-
+        if (client.isEmpty()) {
+            logRepo.save(new Logs("Attempted to add task to client with id " + taskRequest.getId() + " but client not found."));
+            System.out.println("Attempted to add task to client with id " + taskRequest.getId() + " but client not found.");
+            return;
+        }
         Tasks tasks = new Tasks();
         tasks.setTaskName(taskRequest.getName());
         tasks.setClient(client);
         tasks.setCompleted(taskRequest.isCompleted());
         tasksRepo.save(tasks);
+        logRepo.save(new Logs("Task " + taskRequest.getName() + " added."));
     }
 
     public void markCompleted(TaskRequest taskRequest){
@@ -34,8 +39,10 @@ public class TasksService {
             task.setCompleted(taskRequest.isCompleted());
             tasksRepo.save(task);
             System.out.println("Task marked completed");
+            logRepo.save(new Logs("Task " + taskRequest.getName() + " marked completed."));
         }else {
             System.out.println("Task not found");
+            logRepo.save(new Logs("Attempted to mark completed " + taskRequest.getName() + " but task not found."));
         }
     }
 
@@ -45,8 +52,10 @@ public class TasksService {
             System.out.println("Deleting task: " + taskRequest.getName());
             tasksRepo.delete(task);
             System.out.println("Task deleted");
+            logRepo.save(new Logs("Task " + taskRequest.getName() + " deleted."));
         }else {
             System.out.println("Task not found");
+            logRepo.save(new Logs("Attempted to delete " + taskRequest.getName() + " but task not found."));
         }
     }
 }

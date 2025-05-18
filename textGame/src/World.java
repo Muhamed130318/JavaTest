@@ -21,5 +21,11 @@ public class World {
         public ArrayList<String> getBuildings(String name){
             return locations.get(name);
         }
+
+        public void removeEntry(String s, String n){
+            locations.get(s).remove(n);
+        }
     }
+
+
 

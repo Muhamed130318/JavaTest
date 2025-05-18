@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class Game {
 
-    private World world;
+    World world;
     private Scanner scanner;
     private String currentLocation;
     Enemy bear = new Enemy(5, 20, "Bear");
@@ -15,8 +15,8 @@ public class Game {
         world = new World();
         scanner = new Scanner(System.in);
         currentLocation = "Village";
-        battle = new Battle(this);
         mainCharacter = new Character();
+        battle = new Battle(this);
     }
 
 

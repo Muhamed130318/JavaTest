@@ -6,13 +6,14 @@ public class Battle {
     private Enemy enemy;
     private World world;
     private Game game;
-    Character main = game.mainCharacter;
+    Character main;
     private boolean enteredArea = false;
     public Battle(Game game){
         //bear = new Enemy(5, 20, "Bear");
         scanner = new Scanner(System.in);
-        world = new World();
         this.game = game;
+        main = game.mainCharacter;
+        this.world = game.world;
     }
 
     public void Cave(Enemy enemy){
@@ -21,7 +22,7 @@ public class Battle {
         String input = scanner.nextLine();
         if (input.equalsIgnoreCase("Yes")){
             enteredArea = true;
-            fight(enemy);
+            fight(enemy, "Cave");
         }else {
             System.out.println("You back out of the cave slowly to not awaken the " + enemy.name);
             enteredArea = false;
@@ -29,22 +30,34 @@ public class Battle {
         }
     }
 
-    public void fight(Enemy enemy){
+    public void fight(Enemy enemy, String location){
         System.out.printf("You are now fighting a " + enemy.name + "%n");
-        System.out.printf("Would you like to attack or run?%n");
-        String input = scanner.nextLine();
-        if (input.equalsIgnoreCase("attack")){
-            attackEnemy();
+        while (true) {
+            if (enemy.hp <= 0){
+                System.out.println("The " + enemy.name + " has been defeated!");
+                enemyDefeated(enemy.name, location);
+                break;
+            }
+            System.out.printf("Would you like to attack or run?%n");
+            String input = scanner.nextLine();
+            if (input.equalsIgnoreCase("attack")) {
+                attackEnemy(enemy);
+            }
         }
     }
 
-    public void attackEnemy(){
+    public void attackEnemy(Enemy enemy){
+        System.out.println("You attacked the " + enemy.name + " for " + main.getAtkDamage() + " damage.");
         int attack = main.atkDamage;
         enemy.hp -= attack;
+        System.out.println(enemy.name + " hp: " + enemy.hp);
     }
 
     public boolean isEnteredArea() {
-
         return enteredArea;
+    }
+
+    public void enemyDefeated(String name, String location){
+        world.removeEntry(location, name);
     }
 }
